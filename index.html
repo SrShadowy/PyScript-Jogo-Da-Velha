@@ -14,18 +14,18 @@
 <body>
     <div id="game">
         <div class="line">
-            <button class="btn L0 C0 V1" onclick="set_name(this)">'</button>
-            <button class="btn L0 C1 " onclick="set_name(this)">'</button>
-            <button class="btn L0 C2 V2" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
 
 
-            <button class="btn L1 C0" onclick="set_name(this)">'</button>
-            <button class="btn L1 C1 V1 V2" onclick="set_name(this)">'</button>
-            <button class="btn L1 C2" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
 
-            <button class="btn L2 C0 V2" onclick="set_name(this)">'</button>
-            <button class="btn L2 C1" onclick="set_name(this)">'</button>
-            <button class="btn L2 C2 V1" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
+            <button class="btn" onclick="set_name(this)">'</button>
         </div>
     </div>
     <span id="Winner">None</span>
@@ -43,9 +43,52 @@
         {
             width: calc( 550px /3);
             height: calc( 550px /3);
-            background-color: #333333;
+            background-color: #6666;
             color:white;
         }
+
+        #game .line .btn.L0
+        {
+            background-color: green;
+        }
+
+        #game .line .btn.L1
+        {
+            background-color: green;
+        }
+
+        #game .line .btn.L2
+        {
+            background-color: green;
+        }
+
+        #game .line .btn.C0
+        {
+            background-color: blue;
+        }
+
+        #game .line .btn.C1
+        {
+            background-color: blue;
+        }
+
+        #game .line .btn.C2
+        {
+            background-color: blue;
+        }
+
+        #game .line .btn.V1
+        {
+            background-color: red;
+        }
+
+        #game .line .btn.V2
+        {
+            background-color: rgb(119, 0, 255);
+        }
+
+
+
     </style>
 
     
@@ -67,6 +110,9 @@
                     continue;
                 if(elemnt[0+line].innerText == elemnt[1+line].innerText and elemnt[0+line].innerText == elemnt[2+line].innerText ):
                     winner_by = check + " Ganhou na horizontal linha " + str(line);
+                    elemnt[line].classList.toggle(  "L" + str(line));
+                    elemnt[line+1].classList.toggle("L" + str(line+1));
+                    elemnt[line+2].classList.toggle("L" + str(line+2));
                 else:
                     line = line + 3;
                     continue;
@@ -78,22 +124,31 @@
                     continue;
                 if(elemnt[colum].innerText == elemnt[3+colum].innerText and elemnt[3+colum].innerText == elemnt[colum+6].innerText ):
                     winner_by = check + " Ganhou na vertical coluna " + str(colum);
+                    elemnt[colum].classList.toggle(  "C" + str(colum));
+                    elemnt[colum+3].classList.toggle("C" + str(colum+3));
+                    elemnt[colum+6].classList.toggle("C" + str(colum+6));
 
             if(elemnt[0].innerText != "'"):
                 check = elemnt[0].innerText;
                 if(elemnt[0].innerText == elemnt[4].innerText and elemnt[4].innerText == elemnt[8].innerText ):
                     winner_by = check + " Ganhou na vertical 1";
+                    elemnt[0].classList.toggle("V1");
+                    elemnt[4].classList.toggle("V1");
+                    elemnt[8].classList.toggle("V1");
 
             if(elemnt[2].innerText != "'"):        
                 check = elemnt[2].innerText;
                 if(elemnt[2].innerText == elemnt[4].innerText and elemnt[4].innerText == elemnt[6].innerText ):
                     winner_by = check + " Ganhou na vertical 2";
+                    elemnt[2].classList.toggle("V2");
+                    elemnt[4].classList.toggle("V2");
+                    elemnt[6].classList.toggle("V2");
+
 
             winner()
 
         proxy = pyodide.ffi.create_proxy(my_func);
         interval_id = setInterval(proxy, 200, pyodide.ffi.to_js(lines_buttons));
-
         def winner():
             global winner_by;
             if(winner_by != ""):
