@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript Jogo da velha</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+
+
+</head>
+<body>
+    <div id="game">
+        <div class="line">
+            <button class="btn L0 C0 V1" onclick="set_name(this)">'</button>
+            <button class="btn L0 C1 " onclick="set_name(this)">'</button>
+            <button class="btn L0 C2 V2" onclick="set_name(this)">'</button>
+
+
+            <button class="btn L1 C0" onclick="set_name(this)">'</button>
+            <button class="btn L1 C1 V1 V2" onclick="set_name(this)">'</button>
+            <button class="btn L1 C2" onclick="set_name(this)">'</button>
+
+            <button class="btn L2 C0 V2" onclick="set_name(this)">'</button>
+            <button class="btn L2 C1" onclick="set_name(this)">'</button>
+            <button class="btn L2 C2 V1" onclick="set_name(this)">'</button>
+        </div>
+    </div>
+    <span id="Winner">None</span>
+</body>
+<footer>
+    <style>
+        #game
+        {
+            width: 560px;
+            height: 560px;
+            background-color: black;
+            padding: 1%;
+        }
+        #game .line .btn
+        {
+            width: calc( 550px /3);
+            height: calc( 550px /3);
+            background-color: #333333;
+            color:white;
+        }
+    </style>
+
+    
+    <py-script>
+        from js import document, DOMParser, setInterval, clearInterval
+        import pyodide
+        lines_buttons = document.getElementsByClassName('line')[00].children;
+
+        winner_by = "";
+
+        def my_func(elemnt):
+            global winner_by;
+            line = 0;
+            #ganhador na horizontal
+            for x in range(3):
+                check = elemnt[line].innerText;
+                if(check == "'"):
+                    line = line + 3;
+                    continue;
+                if(elemnt[0+line].innerText == elemnt[1+line].innerText and elemnt[0+line].innerText == elemnt[2+line].innerText ):
+                    winner_by = check + " Ganhou na horizontal linha " + str(line);
+                else:
+                    line = line + 3;
+                    continue;
+
+            #ganhador na vertical
+            for colum in range(3):
+                check = elemnt[colum].innerText;
+                if(check == "'"):
+                    continue;
+                if(elemnt[colum].innerText == elemnt[3+colum].innerText and elemnt[3+colum].innerText == elemnt[colum+6].innerText ):
+                    winner_by = check + " Ganhou na vertical coluna " + str(colum);
+
+            if(elemnt[0].innerText != "'"):
+                check = elemnt[0].innerText;
+                if(elemnt[0].innerText == elemnt[4].innerText and elemnt[4].innerText == elemnt[8].innerText ):
+                    winner_by = check + " Ganhou na vertical 1";
+
+            if(elemnt[2].innerText != "'"):        
+                check = elemnt[2].innerText;
+                if(elemnt[2].innerText == elemnt[4].innerText and elemnt[4].innerText == elemnt[6].innerText ):
+                    winner_by = check + " Ganhou na vertical 2";
+
+            winner()
+
+        proxy = pyodide.ffi.create_proxy(my_func);
+        interval_id = setInterval(proxy, 200, pyodide.ffi.to_js(lines_buttons));
+
+        def winner():
+            global winner_by;
+            if(winner_by != ""):
+                element_winner = document.getElementById('Winner');
+                console.log(element_winner);
+                element_winner.innerText = winner_by;
+                print(winner_by);
+                clearInterval(interval_id);
+
+    </py-script>
+    <script>
+        player = true;
+        function set_name(elemnt)
+        {
+            if(player && elemnt.innerText == "'")
+            {
+                elemnt.innerText = "O";
+                player = false;
+            }
+            else if(elemnt.innerText == "'")
+            {
+                elemnt.innerText = "X";
+                player = true;
+            }
+        }
+    </script>
+</footer>
+</html>
