@@ -8,6 +8,10 @@ Fiz um joguinho do jogo da velha para ter uma experiencia com essa tecnologia, d
 
 ![Em execução](https://i.imgur.com/Hw0Qjnv.gif)
 
+E agora com cores!
+
+![Update](https://i.imgur.com/6X15WOx.gif)
+
 ## 🙋Feedback 🙋‍♀️ 
 
 Se você tem algum Feedback de melhoria e/ou adição pode me contatar no [twitter](https://twitter.com/SrShadowy)
