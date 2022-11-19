@@ -109,10 +109,12 @@
                     line = line + 3;
                     continue;
                 if(elemnt[0+line].innerText == elemnt[1+line].innerText and elemnt[0+line].innerText == elemnt[2+line].innerText ):
-                    winner_by = check + " Ganhou na horizontal linha " + str(line);
-                    elemnt[line].classList.toggle(  "L" + str(line));
-                    elemnt[line+1].classList.toggle("L" + str(line+1));
-                    elemnt[line+2].classList.toggle("L" + str(line+2));
+                    true_line = int( line / 3 );
+                    #Não sei porque o toggle não funciona aqui.
+                    winner_by = check + " Ganhou na horizontal linha " + str(true_line+1);
+                    elemnt[line+0].classList.add("L" + str(true_line));
+                    elemnt[line+1].classList.add("L" + str(true_line));
+                    elemnt[line+2].classList.add("L" + str(true_line));
                 else:
                     line = line + 3;
                     continue;
@@ -124,9 +126,9 @@
                     continue;
                 if(elemnt[colum].innerText == elemnt[3+colum].innerText and elemnt[3+colum].innerText == elemnt[colum+6].innerText ):
                     winner_by = check + " Ganhou na vertical coluna " + str(colum);
-                    elemnt[colum].classList.toggle(  "C" + str(colum));
-                    elemnt[colum+3].classList.toggle("C" + str(colum+3));
-                    elemnt[colum+6].classList.toggle("C" + str(colum+6));
+                    elemnt[colum+0].classList.toggle("C" + str(colum));
+                    elemnt[colum+3].classList.toggle("C" + str(colum));
+                    elemnt[colum+6].classList.toggle("C" + str(colum));
 
             if(elemnt[0].innerText != "'"):
                 check = elemnt[0].innerText;
