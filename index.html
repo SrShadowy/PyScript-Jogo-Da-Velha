@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyScript Jogo da velha</title>
 
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+ 	<!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="./assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
 
 
 </head>
@@ -98,6 +104,14 @@
         lines_buttons = document.getElementsByClassName('line')[00].children;
 
         winner_by = "";
+        def winner():
+            global winner_by;
+            if(winner_by != ""):
+                element_winner = document.getElementById('Winner');
+                #console.log(element_winner);
+                element_winner.innerText = winner_by;
+                print(winner_by);
+                clearInterval(interval_id);
 
         def my_func(elemnt):
             global winner_by;
@@ -151,14 +165,7 @@
 
         proxy = pyodide.ffi.create_proxy(my_func);
         interval_id = setInterval(proxy, 200, pyodide.ffi.to_js(lines_buttons));
-        def winner():
-            global winner_by;
-            if(winner_by != ""):
-                element_winner = document.getElementById('Winner');
-                console.log(element_winner);
-                element_winner.innerText = winner_by;
-                print(winner_by);
-                clearInterval(interval_id);
+        
 
     </py-script>
     <script>
